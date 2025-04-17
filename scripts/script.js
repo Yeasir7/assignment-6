@@ -53,44 +53,47 @@ const loadData2 = async(value) => {
 }
 
 const displayData2 = (data) => {
-    const discussContainer = document.getElementById('discuss-container')
-    // console.log(data)
+    const discussContainer = document.getElementById('discuss-container');
+    discussContainer.innerHTML = ''; // Clear old posts
 
-    data.forEach( d => {
-        const div = document.createElement('div')
+    data.posts.forEach(post => {
+        const div = document.createElement('div');
+        div.classList = 'bg-white shadow-md rounded-xl p-6 mb-6';
+
         div.innerHTML = `
-        <div class="md:w-[700px] md:h-[270px]">
-                        <div class="flex gap-3">
-                            <p>#Muisc</p>
-                            <p>author:</p>
+            <div class="flex flex-col gap-4">
+                <div class="flex gap-3 text-sm text-gray-500">
+                    <p>#${post.category}</p>
+                    <p>Author: ${post.author.name}</p>
+                </div>
+                <h2 class="text-xl font-bold">${post.title}</h2>
+                <p>${post.description}</p>
+                <hr class="my-4 border-dashed">
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-6 text-sm text-gray-600">
+                        <div class="flex items-center gap-1">
+                            <img src="images/tabler-icon-message-2.png" alt="">
+                            <p>${post.comment_count}</p>
                         </div>
-                        <div class="">
-                            <h2 class="text-[20px] font-bold my-4">10 Kids Unaware of Their Halloween Costume</h2>
-                            <p>It’s one thing to subject yourself to ha Halloween costume mishap because, <br> hey that’s your prerogative</p>
-                        </div> <hr class="my-4 border-dashed">
-                        <div class="flex justify-between">
-                            <div class="flex items-center space-x-3">
-                                <div class="flex">
-                                    <img src="images/tabler-icon-message-2.png" alt="">
-                                    <p>506</p>
-                                </div>
-                                <div class="flex">
-                                    <img src="images/tabler-icon-eye.png" alt="">
-                                    <p>506</p>
-                                </div>
-                                <div class="flex">
-                                    <img src="images/tabler-icon-clock-hour-9.svg" alt="">
-                                    <p>506</p>
-                                </div>
-                            </div>
-                            <button class="btn btn-square">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-[1.2em]"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
-                            </button>
+                        <div class="flex items-center gap-1">
+                            <img src="images/tabler-icon-eye.png" alt="">
+                            <p>${post.view_count}</p>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <img src="images/tabler-icon-clock-hour-9.svg" alt="">
+                            <p>${post.posted_time} min</p>
                         </div>
                     </div>
-        `
-    })
+                    <button class="btn btn-square" onclick='showModal(${JSON.stringify(post)})'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-[1.2em]"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
+                    </button>
+                </div>
+            </div>
+        `;
+        discussContainer.appendChild(div);
+    });
 }
+
 
 const handleSearch = () => {
     const inputValue = document.getElementById('input-value')
